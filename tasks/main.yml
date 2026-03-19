@@ -1,0 +1,38 @@
+---
+# tasks file for vector-role
+    - name: Установить Vector бинарник напрямую
+      become: true
+      ansible.builtin.get_url:
+       url: https://github.com/vectordotdev/vector/releases/download/v0.50.0/vector-0.50.0-x86_64-unknown-linux-gnu.tar.gz
+       dest: /usr/local/bin/vector.tar.gz
+       mode: '0644'
+
+    - name: Распаковать Vector
+      become: true
+      ansible.builtin.unarchive:
+        src: /usr/local/bin/vector.tar.gz
+        dest: /usr/local
+        remote_src: yes
+        creates: /opt/vector-0.50.0/bin/vector
+    - name: Создать systemd сервис
+      become: true
+      ansible.builtin.copy:
+       content: |
+        [Unit]
+        Description=Vector
+        After=network.target
+
+        [Service]
+        ExecStart=/usr/local/vector-0.50.0/bin/vector
+        Restart=always
+
+        [Install]
+        WantedBy=multi-user.target
+       dest: /etc/systemd/system/vector.service
+
+    - name: Запустить Vector
+      become: true
+      ansible.builtin.systemd:
+       name: vector
+       enabled: yes
+       state: started
