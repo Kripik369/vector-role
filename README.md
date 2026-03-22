@@ -36,3 +36,9 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+<img width="1454" height="676" alt="image" src="https://github.com/user-attachments/assets/8034822b-52e1-4db3-811e-fcaffc184e44" />
+
+<img width="1467" height="706" alt="image" src="https://github.com/user-attachments/assets/9209a31f-7ee3-451d-ba82-a33805c81360" />
+
+
